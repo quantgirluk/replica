@@ -4,3 +4,6 @@ scipy>=1.10.0
 matplotlib>=3.6.2
 statsmodels>=0.13.5
 parameterized>=0.8.1
+qablet_contracts>=0.2.2
+qablet-basic>=0.3.2
+pyarrow>=13.0.0

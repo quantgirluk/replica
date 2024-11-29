@@ -38,5 +38,22 @@ class SPEulerMaruyama(SPAnalytical):
 
         return path
 
+    def start(self, initial):
+        """Set an initial state for all paths. initial can be a scalar or a numpy array."""
+        self.val = initial
+        self.cur_time = 0.0
+
+    def advance(self, t):
+        """Advance the process to time t, for all paths."""
+        dt = t - self.cur_time
+        if dt < 1e-10:
+            return
+        # Generate the Brownian increments, for all paths at time t
+        dws = self.rng.normal(scale=np.sqrt(dt), size=self.val.shape)
+
+        # update val for all paths
+        self.val += self.f(self.val, t) * dt + self.g(self.val, t) * dws
+        self.cur_time = t
+
     def sample(self, n):
         return self._sample_em_process(n)
